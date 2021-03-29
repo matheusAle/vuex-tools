@@ -50,13 +50,13 @@ Name | Type |
 `payload` | P |
 `type` | *string* |
 
-Defined in: [src/types.ts:27](https://github.com/matheusAle/vuex-tools/blob/d89fee5/src/types.ts#L27)
+Defined in: [src/types.ts:30](https://github.com/matheusAle/vuex-tools/blob/475a139/src/types.ts#L30)
 
 ___
 
 ### Mutation
 
-Ƭ **Mutation**<S, P\>: (`state`: S, `P`: P) => *void*
+Ƭ **Mutation**<State, P\>: (`state`: State, `P`: P) => *void*
 
 Typed Vuex Mutation function
 
@@ -64,23 +64,23 @@ Typed Vuex Mutation function
 
 Name | Description |
 :------ | :------ |
-`S` | Module state type   |
+`State` | Module state type   |
 `P` | Mutation payload type    |
 
 #### Type declaration:
 
-▸ (`state`: S, `P`: P): *void*
+▸ (`state`: State, `P`: P): *void*
 
 #### Parameters:
 
 Name | Type |
 :------ | :------ |
-`state` | S |
+`state` | State |
 `P` | P |
 
 **Returns:** *void*
 
-Defined in: [src/types.ts:9](https://github.com/matheusAle/vuex-tools/blob/d89fee5/src/types.ts#L9)
+Defined in: [src/types.ts:9](https://github.com/matheusAle/vuex-tools/blob/475a139/src/types.ts#L9)
 
 ## Functions
 
@@ -104,7 +104,7 @@ Name | Type |
 
 **Returns:** *Store*<R\>
 
-Defined in: [src/buildStore.ts:6](https://github.com/matheusAle/vuex-tools/blob/d89fee5/src/buildStore.ts#L6)
+Defined in: [src/buildStore.ts:6](https://github.com/matheusAle/vuex-tools/blob/475a139/src/buildStore.ts#L6)
 
 ___
 
@@ -127,7 +127,7 @@ Name | Type | Default value |
 
 **Returns:** [*ModuleBuilder*](interfaces/modulebuilder.md)<S, R\>
 
-Defined in: [src/createModule.ts:8](https://github.com/matheusAle/vuex-tools/blob/d89fee5/src/createModule.ts#L8)
+Defined in: [src/createModule.ts:8](https://github.com/matheusAle/vuex-tools/blob/475a139/src/createModule.ts#L8)
 
 ___
 
@@ -143,4 +143,4 @@ Name |
 
 **Returns:** [*ModuleBuilder*](interfaces/modulebuilder.md)<S, unknown\>
 
-Defined in: [src/createStore.ts:4](https://github.com/matheusAle/vuex-tools/blob/d89fee5/src/createStore.ts#L4)
+Defined in: [src/createStore.ts:4](https://github.com/matheusAle/vuex-tools/blob/475a139/src/createStore.ts#L4)
