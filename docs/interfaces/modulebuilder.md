@@ -62,7 +62,7 @@ Name | Type | Description |
 
 **Returns:** [*ActionType*](../README.md#actiontype)<P\>
 
-Defined in: [src/types.ts:86](https://github.com/matheusAle/vuex-tools/blob/a8f71a8/src/types.ts#L86)
+Defined in: [src/types.ts:86](https://github.com/matheusAle/vuex-tools/blob/d89fee5/src/types.ts#L86)
 
 ___
 
@@ -80,7 +80,7 @@ Name | Type | Description |
 
 **Returns:** *Module*<S, R\>
 
-Defined in: [src/types.ts:112](https://github.com/matheusAle/vuex-tools/blob/a8f71a8/src/types.ts#L112)
+Defined in: [src/types.ts:112](https://github.com/matheusAle/vuex-tools/blob/d89fee5/src/types.ts#L112)
 
 ___
 
@@ -119,7 +119,7 @@ Name | Type | Description |
 
 **Returns:** *GetterHandler*<P\>
 
-Defined in: [src/types.ts:107](https://github.com/matheusAle/vuex-tools/blob/a8f71a8/src/types.ts#L107)
+Defined in: [src/types.ts:107](https://github.com/matheusAle/vuex-tools/blob/d89fee5/src/types.ts#L107)
 
 ___
 
@@ -153,4 +153,4 @@ Name | Type | Description |
 
 **Returns:** [*ActionType*](../README.md#actiontype)<P\>
 
-Defined in: [src/types.ts:64](https://github.com/matheusAle/vuex-tools/blob/a8f71a8/src/types.ts#L64)
+Defined in: [src/types.ts:64](https://github.com/matheusAle/vuex-tools/blob/d89fee5/src/types.ts#L64)

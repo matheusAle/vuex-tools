@@ -2,60 +2,31 @@
 
 The easiest way to deal with Vuex store modules with typescript.
 
-## Example
+## Examples
 
 ```ts
-import { createModule, createStore, buildStore } from 'vuex-tools';
-import Api from './Service';
-import Vue from 'vue';
+import { createStore, buildStore } from 'vuex-tools';
 
+const root = createStore<RootStore>();
 
-interface User {
-  name: string;
-  email: string;
-}
-
-interface Post {
-  id: number;
-  title: string;
-}
-
-interface PostState {
-  posts:
-}
-
-interface RootState {
-  user: { name: email }
-}
-
-const root = createStore<RootState>();
-const setUser = root.mutation<string>('setUser', (state, user) =>
-  Vue.set(state, 'user', user);
+export const increment = root.mutation(
+  'increment',
+  (state) => (state.counter = state.counter + 1),
 );
-const fetchToken = root.action('fetchUser', ({commit}) =>
-  Api.fetchUser().then(user => commit(setUser(user)))
-);
-const userNameAndEmail = root.getter('userNameAndEmail', (state) =>
-  `${state.user.name} <${state.user.email}>`
+export const decrement = root.mutation(
+  'descrement',
+  (state) => (state.counter = state.counter - 1),
 );
 
-const post = createModule<PostState, RootState>('Post');
-const setPosts = root.mutation<Post[]>('setPosts', (state, posts) =>
-  Vue.set(state, 'posts', posts);
-);
-const fetchPosts = root.action('fetchUser', ({commit}) =>
-  Api.fetchUser().then(user => commit(setPosts(user)))
-);
+export default buildStore<RootStore>(root, { counter: 0 });
 
-const store = buildStore({user: {}}, root, [
-  post.getModule({ posts: [] }),
-]);
-
-
-store.dispatch(fetchUser());
-store.dispatch(fetchPosts());
-
+store.commit(increment());
+// this.$store.commit(increment())
 ```
+
+[simple counter app on CodeBox](https://codesandbox.io/s/vuex-tools-example-vz2of?file=/src/store/index.ts)
+
+[nuxt current date example](https://codesandbox.io/s/vuex-tools-nuxt-example-fvksv?file=/store/index.js)
 
 ## Documentation
 

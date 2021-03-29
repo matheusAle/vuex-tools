@@ -3,10 +3,10 @@ import type * as Vuex from 'vuex';
 /**
  * Typed Vuex Mutation function
  *
- * @typeParam S Module state type
+ * @typeParam State Module state type
  * @typeParam P Mutation payload type
  */
-export type Mutation<S, P> = (state: S, P: P) => void;
+export type Mutation<State, P> = (state: State, P: P) => void;
 
 /**
  * @ignore
@@ -18,7 +18,10 @@ export type GetterHandler<R> = (gatter: any) => R;
  * @ignore
  * Typed Vuex action function
  */
-export type ActionHandler<S, R, P> = (store: Vuex.Store<R>, payload: P) => void;
+export type ActionHandler<State, RootStore, Payload> = (
+  store: Vuex.ActionContext<State, RootStore>,
+  payload: Payload,
+) => void;
 
 /**
  * return if action/mutation create
@@ -32,7 +35,7 @@ export type ActionType<P> = (payload: P) => { type: string; payload: P };
  * @typeParam S Module state type
  * @typeParam R RootStore state type
  */
-export interface Module<S, R> extends Vuex.Module<S, R> {
+export interface Module<State, R> extends Vuex.Module<State, R> {
   name: string;
 }
 
@@ -44,7 +47,7 @@ export interface Module<S, R> extends Vuex.Module<S, R> {
  *
  * ```
  */
-export interface ModuleBuilder<S, R = unknown> {
+export interface ModuleBuilder<State, RootState = unknown> {
   /**
    * define an Mutation and return an typed create commit function;
    *
@@ -61,7 +64,10 @@ export interface ModuleBuilder<S, R = unknown> {
    * @param func mutation handler function
    * @typeParam P Mutation payload type
    */
-  mutation<P>(name: string, func: Mutation<S, P>): ActionType<P>;
+  mutation<Payload>(
+    name: string,
+    mutationFn: Mutation<State, Payload>,
+  ): ActionType<Payload>;
 
   /**
    * define an Action and return an typed create dispatch function
@@ -83,7 +89,10 @@ export interface ModuleBuilder<S, R = unknown> {
    * @param func action handler function
    *
    */
-  action<P>(name: string, func: ActionHandler<S, R, P>): ActionType<P>;
+  action<Payload>(
+    name: string,
+    actionFn: ActionHandler<State, RootState, Payload>,
+  ): ActionType<Payload>;
 
   /**
    * Define an getter function and create an acessor function
@@ -104,10 +113,13 @@ export interface ModuleBuilder<S, R = unknown> {
    * @param name gatter name
    * @param func Vuex gatter function
    */
-  getter<P>(name: string, func: Vuex.Getter<S, R>): GetterHandler<P>;
+  getter<Payload>(
+    name: string,
+    getterFn: Vuex.Getter<State, RootState>,
+  ): GetterHandler<Payload>;
   /**
    * Receive the initial module state and return an instance of Vuex Module object
    * @param state initial module state
    */
-  getModule(state: S): Module<S, R>;
+  getModule(state: State): Module<State, RootState>;
 }
