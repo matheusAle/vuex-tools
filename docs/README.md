@@ -1,19 +1,16 @@
-[libraryNameWithSpacesAndUpperCases]
+Vuex Tools
 
-# [libraryNameWithSpacesAndUpperCases]
+# Vuex Tools
 
 ## Table of contents
 
 ### Interfaces
 
-- [Module](interfaces/module.md)
 - [ModuleBuilder](interfaces/modulebuilder.md)
 
 ### Type aliases
 
-- [ActionHandler](README.md#actionhandler)
 - [ActionType](README.md#actiontype)
-- [GetterHandler](README.md#getterhandler)
 - [Mutation](README.md#mutation)
 
 ### Functions
@@ -24,50 +21,17 @@
 
 ## Type aliases
 
-### ActionHandler
-
-Ƭ **ActionHandler**<S, R, P\>: (`store`: *Vuex.Store*<R\>, `payload`: P) => *void*
-
-Typed Vuex action function
-
-#### Type parameters:
-
-Name |
-:------ |
-`S` |
-`R` |
-`P` |
-
-#### Type declaration:
-
-▸ (`store`: *Vuex.Store*<R\>, `payload`: P): *void*
-
-#### Parameters:
-
-Name | Type |
-:------ | :------ |
-`store` | *Vuex.Store*<R\> |
-`payload` | P |
-
-**Returns:** *void*
-
-Defined in: src/types.ts:16
-
-___
-
 ### ActionType
 
 Ƭ **ActionType**<P\>: (`payload`: P) => { `payload`: P ; `type`: *string*  }
 
 return if action/mutation create
 
-**`param`** Action payload type
-
 #### Type parameters:
 
-Name |
-:------ |
-`P` |
+Name | Description |
+:------ | :------ |
+`P` | Action payload type    |
 
 #### Type declaration:
 
@@ -86,33 +50,7 @@ Name | Type |
 `payload` | P |
 `type` | *string* |
 
-Defined in: src/types.ts:22
-
-___
-
-### GetterHandler
-
-Ƭ **GetterHandler**<R\>: (`gatter`: *any*) => R
-
-#### Type parameters:
-
-Name |
-:------ |
-`R` |
-
-#### Type declaration:
-
-▸ (`gatter`: *any*): R
-
-#### Parameters:
-
-Name | Type |
-:------ | :------ |
-`gatter` | *any* |
-
-**Returns:** R
-
-Defined in: src/types.ts:11
+Defined in: [src/types.ts:27](https://github.com/matheusAle/vuex-tools/blob/a8f71a8/src/types.ts#L27)
 
 ___
 
@@ -122,16 +60,12 @@ ___
 
 Typed Vuex Mutation function
 
-**`param`** Module state type
-
-**`param`** Mutation payload type
-
 #### Type parameters:
 
-Name |
-:------ |
-`S` |
-`P` |
+Name | Description |
+:------ | :------ |
+`S` | Module state type   |
+`P` | Mutation payload type    |
 
 #### Type declaration:
 
@@ -146,13 +80,13 @@ Name | Type |
 
 **Returns:** *void*
 
-Defined in: src/types.ts:8
+Defined in: [src/types.ts:9](https://github.com/matheusAle/vuex-tools/blob/a8f71a8/src/types.ts#L9)
 
 ## Functions
 
 ### buildStore
 
-▸ **buildStore**<R\>(`root`: [*ModuleBuilder*](interfaces/modulebuilder.md)<R, unknown\>, `state`: R, `modules?`: [*Module*](interfaces/module.md)<any, R\>[]): *Store*<R\>
+▸ **buildStore**<R\>(`root`: [*ModuleBuilder*](interfaces/modulebuilder.md)<R, unknown\>, `state`: R, `modules?`: *Module*<any, R\>[]): *Store*<R\>
 
 #### Type parameters:
 
@@ -166,11 +100,11 @@ Name | Type |
 :------ | :------ |
 `root` | [*ModuleBuilder*](interfaces/modulebuilder.md)<R, unknown\> |
 `state` | R |
-`modules` | [*Module*](interfaces/module.md)<any, R\>[] |
+`modules` | *Module*<any, R\>[] |
 
 **Returns:** *Store*<R\>
 
-Defined in: src/buildStore.ts:6
+Defined in: [src/buildStore.ts:6](https://github.com/matheusAle/vuex-tools/blob/a8f71a8/src/buildStore.ts#L6)
 
 ___
 
@@ -193,7 +127,7 @@ Name | Type | Default value |
 
 **Returns:** [*ModuleBuilder*](interfaces/modulebuilder.md)<S, R\>
 
-Defined in: [src/createModule.ts:8](https://github.com/matheusAle/vuex-toolkit/blob/42b5ba2/src/createModule.ts#L8)
+Defined in: [src/createModule.ts:8](https://github.com/matheusAle/vuex-tools/blob/a8f71a8/src/createModule.ts#L8)
 
 ___
 
@@ -209,4 +143,4 @@ Name |
 
 **Returns:** [*ModuleBuilder*](interfaces/modulebuilder.md)<S, unknown\>
 
-Defined in: [src/createStore.ts:4](https://github.com/matheusAle/vuex-toolkit/blob/42b5ba2/src/createStore.ts#L4)
+Defined in: [src/createStore.ts:4](https://github.com/matheusAle/vuex-tools/blob/a8f71a8/src/createStore.ts#L4)
