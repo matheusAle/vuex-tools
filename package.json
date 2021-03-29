@@ -1,7 +1,7 @@
 {
-  "name": "[libraryName]",
-  "version": "0.0.0",
-  "description": "",
+  "name": "vuex-tools",
+  "version": ".0.1",
+  "description": "A library like redux-toolkit for Vuex",
   "cdn": "dist/index.umd.js",
   "main": "dist/index.js",
   "types": "types/index.d.ts",
@@ -19,7 +19,10 @@
       "./dist/index.js"
     ]
   },
-  "dependencies": {},
+  "peerDependencies": {
+    "vue": "^2.6.12",
+    "vuex": "^3.6.2"
+  },
   "devDependencies": {
     "@types/eslint": "^7.2.7",
     "@types/jest": "^26.0.21",
@@ -50,7 +53,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/[repositoryOwner]/[repositoryName].git"
+    "url": "git+https://github.com/matheusAle/vuex-tools.git"
   },
   "keywords": [
     "typescript",
@@ -62,7 +65,7 @@
   },
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/[repositoryOwner]/[repositoryName]/issues"
+    "url": "https://github.com/[repositoryOwner]/vuex-tools/issues"
   },
-  "homepage": "https://github.com/[repositoryOwner]/[repositoryName]#readme"
+  "homepage": "https://github.com/[repositoryOwner]/vuex-tools#readme"
 }

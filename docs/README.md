@@ -4,51 +4,209 @@
 
 ## Table of contents
 
+### Interfaces
+
+- [Module](interfaces/module.md)
+- [ModuleBuilder](interfaces/modulebuilder.md)
+
 ### Type aliases
 
-- [NumberParseable](README.md#numberparseable)
+- [ActionHandler](README.md#actionhandler)
+- [ActionType](README.md#actiontype)
+- [GetterHandler](README.md#getterhandler)
+- [Mutation](README.md#mutation)
 
 ### Functions
 
-- [isNumberParseable](README.md#isnumberparseable)
+- [buildStore](README.md#buildstore)
+- [createModule](README.md#createmodule)
+- [createStore](README.md#createstore)
 
 ## Type aliases
 
-### NumberParseable
+### ActionHandler
 
-Ƭ **NumberParseable**: *number* \| *string* \| *boolean* & { `isNumberParseble`: unique *symbol*  }
+Ƭ **ActionHandler**<S, R, P\>: (`store`: *Vuex.Store*<R\>, `payload`: P) => *void*
 
-A Branded Type for values parseable to number.
+Typed Vuex action function
 
-Defined in: [index.ts:4](https://github.com/VitorLuizC/typescript-library-boilerplate/blob/af1fd23/src/index.ts#L4)
+#### Type parameters:
 
-## Functions
+Name |
+:------ |
+`S` |
+`R` |
+`P` |
 
-### isNumberParseable
+#### Type declaration:
 
-▸ `Const`**isNumberParseable**(`value`: *unknown*): value is string \| number \| boolean & object
-
-Check if value is parseable to number.
-
-**`example`** ```ts
-isNumberParseable('AAAA');
-//=> false
-
-isNumberParseable('100');
-//=> true
-
-if (!isNumberParseable(value))
-  throw new Error('Value can\'t be parseable to `Number`.')
-return Number(value);
-```
-@param value - An `unknown` value to be checked.
+▸ (`store`: *Vuex.Store*<R\>, `payload`: P): *void*
 
 #### Parameters:
 
 Name | Type |
 :------ | :------ |
-`value` | *unknown* |
+`store` | *Vuex.Store*<R\> |
+`payload` | P |
 
-**Returns:** value is string \| number \| boolean & object
+**Returns:** *void*
 
-Defined in: [index.ts:23](https://github.com/VitorLuizC/typescript-library-boilerplate/blob/af1fd23/src/index.ts#L23)
+Defined in: src/types.ts:16
+
+___
+
+### ActionType
+
+Ƭ **ActionType**<P\>: (`payload`: P) => { `payload`: P ; `type`: *string*  }
+
+return if action/mutation create
+
+**`param`** Action payload type
+
+#### Type parameters:
+
+Name |
+:------ |
+`P` |
+
+#### Type declaration:
+
+▸ (`payload`: P): *object*
+
+#### Parameters:
+
+Name | Type |
+:------ | :------ |
+`payload` | P |
+
+**Returns:** *object*
+
+Name | Type |
+:------ | :------ |
+`payload` | P |
+`type` | *string* |
+
+Defined in: src/types.ts:22
+
+___
+
+### GetterHandler
+
+Ƭ **GetterHandler**<R\>: (`gatter`: *any*) => R
+
+#### Type parameters:
+
+Name |
+:------ |
+`R` |
+
+#### Type declaration:
+
+▸ (`gatter`: *any*): R
+
+#### Parameters:
+
+Name | Type |
+:------ | :------ |
+`gatter` | *any* |
+
+**Returns:** R
+
+Defined in: src/types.ts:11
+
+___
+
+### Mutation
+
+Ƭ **Mutation**<S, P\>: (`state`: S, `P`: P) => *void*
+
+Typed Vuex Mutation function
+
+**`param`** Module state type
+
+**`param`** Mutation payload type
+
+#### Type parameters:
+
+Name |
+:------ |
+`S` |
+`P` |
+
+#### Type declaration:
+
+▸ (`state`: S, `P`: P): *void*
+
+#### Parameters:
+
+Name | Type |
+:------ | :------ |
+`state` | S |
+`P` | P |
+
+**Returns:** *void*
+
+Defined in: src/types.ts:8
+
+## Functions
+
+### buildStore
+
+▸ **buildStore**<R\>(`root`: [*ModuleBuilder*](interfaces/modulebuilder.md)<R, unknown\>, `state`: R, `modules?`: [*Module*](interfaces/module.md)<any, R\>[]): *Store*<R\>
+
+#### Type parameters:
+
+Name |
+:------ |
+`R` |
+
+#### Parameters:
+
+Name | Type |
+:------ | :------ |
+`root` | [*ModuleBuilder*](interfaces/modulebuilder.md)<R, unknown\> |
+`state` | R |
+`modules` | [*Module*](interfaces/module.md)<any, R\>[] |
+
+**Returns:** *Store*<R\>
+
+Defined in: src/buildStore.ts:6
+
+___
+
+### createModule
+
+▸ **createModule**<S, R\>(`moduleName?`: *string*): [*ModuleBuilder*](interfaces/modulebuilder.md)<S, R\>
+
+#### Type parameters:
+
+Name | Default |
+:------ | :------ |
+`S` | - |
+`R` | *unknown* |
+
+#### Parameters:
+
+Name | Type | Default value |
+:------ | :------ | :------ |
+`moduleName` | *string* | '' |
+
+**Returns:** [*ModuleBuilder*](interfaces/modulebuilder.md)<S, R\>
+
+Defined in: [src/createModule.ts:8](https://github.com/matheusAle/vuex-toolkit/blob/42b5ba2/src/createModule.ts#L8)
+
+___
+
+### createStore
+
+▸ **createStore**<S\>(): [*ModuleBuilder*](interfaces/modulebuilder.md)<S, unknown\>
+
+#### Type parameters:
+
+Name |
+:------ |
+`S` |
+
+**Returns:** [*ModuleBuilder*](interfaces/modulebuilder.md)<S, unknown\>
+
+Defined in: [src/createStore.ts:4](https://github.com/matheusAle/vuex-toolkit/blob/42b5ba2/src/createStore.ts#L4)
