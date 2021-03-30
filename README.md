@@ -7,19 +7,26 @@ The easiest way to deal with Vuex store modules using typescript.
 ```ts
 import { createStore, createModule } from 'vuex-tools';
 
-const module = createModule<RootStore['modue'], RootStore>();
+interface RootState {
+  counter: {
+    count: number
+  }
+}
 
-export const increment = module.mutation('increment', state =>
-  state.counter = state.counter + 1
+const counter = createModule<RootState['counter'], RootState>({ count: 0 });
+
+export const increment = counter.mutation('increment', state =>
+  state.count = state.count + 1
 );
-export const decrement = module.mutation('descrement', state =>
-  state.counter = state.counter - 1
+
+export const decrement = counter.mutation('decrement', state =>
+  state.count = state.count - 1
 );
 
 export default createStore<RootStore>({
   plugins: [],
   moduleBuilders: {
-    module
+    counter
   }
 });
 

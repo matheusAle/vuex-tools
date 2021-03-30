@@ -1,5 +1,5 @@
 /*!
- * vuex-tools v1.0.0-beta
+ * vuex-tools v1.0.1-beta
  * (c) [authorFullName]
  * Released under the MIT License.
  */
