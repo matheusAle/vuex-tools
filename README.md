@@ -23,7 +23,7 @@ export const decrement = counter.mutation('decrement', state =>
   state.count = state.count - 1
 );
 
-export default createStore<RootStore>({
+export default createStore<RootState>({
   plugins: [],
   moduleBuilders: {
     counter
@@ -34,7 +34,7 @@ store.commit(increment());
 // this.$store.commit(increment())
 ```
 
-[simple counter app on CodeBox](https://codesandbox.io/s/vuex-tools-example-vz2of?file=/src/store/index.ts)
+[View on Code Sand Box](https://codesandbox.io/s/vuex-tools-example-vz2of?file=/src/store/index.ts)
 
 [nuxt current date example](https://codesandbox.io/s/vuex-tools-nuxt-example-fvksv?file=/store/index.js)
 
