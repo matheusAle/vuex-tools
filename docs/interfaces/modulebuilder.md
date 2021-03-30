@@ -58,7 +58,7 @@ Name | Type | Description |
 
 **Returns:** [*ActionType*](../README.md#actiontype)<Payload\>
 
-Defined in: [src/types.ts:89](https://github.com/matheusAle/vuex-tools/blob/ad2c9a8/src/types.ts#L89)
+Defined in: [src/types.ts:89](https://github.com/matheusAle/vuex-tools/blob/ef26ccf/src/types.ts#L89)
 
 ___
 
@@ -76,7 +76,7 @@ Name | Type |
 
 **Returns:** *Module*<State, RootState\>
 
-Defined in: [src/types.ts:123](https://github.com/matheusAle/vuex-tools/blob/ad2c9a8/src/types.ts#L123)
+Defined in: [src/types.ts:123](https://github.com/matheusAle/vuex-tools/blob/ef26ccf/src/types.ts#L123)
 
 ___
 
@@ -117,7 +117,7 @@ Name | Type | Description |
 
 **Returns:** *GetterHandler*<Return\>
 
-Defined in: [src/types.ts:116](https://github.com/matheusAle/vuex-tools/blob/ad2c9a8/src/types.ts#L116)
+Defined in: [src/types.ts:116](https://github.com/matheusAle/vuex-tools/blob/ef26ccf/src/types.ts#L116)
 
 ___
 
@@ -151,4 +151,4 @@ Name | Type | Description |
 
 **Returns:** [*ActionType*](../README.md#actiontype)<Payload\>
 
-Defined in: [src/types.ts:66](https://github.com/matheusAle/vuex-tools/blob/ad2c9a8/src/types.ts#L66)
+Defined in: [src/types.ts:66](https://github.com/matheusAle/vuex-tools/blob/ef26ccf/src/types.ts#L66)

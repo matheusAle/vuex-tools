@@ -49,7 +49,7 @@ Name | Type |
 `payload` | P |
 `type` | *string* |
 
-Defined in: [src/types.ts:30](https://github.com/matheusAle/vuex-tools/blob/ad2c9a8/src/types.ts#L30)
+Defined in: [src/types.ts:30](https://github.com/matheusAle/vuex-tools/blob/ef26ccf/src/types.ts#L30)
 
 ___
 
@@ -79,7 +79,7 @@ Name | Type |
 
 **Returns:** *void*
 
-Defined in: [src/types.ts:9](https://github.com/matheusAle/vuex-tools/blob/ad2c9a8/src/types.ts#L9)
+Defined in: [src/types.ts:9](https://github.com/matheusAle/vuex-tools/blob/ef26ccf/src/types.ts#L9)
 
 ## Functions
 
@@ -110,7 +110,7 @@ Name | Type |
 
 **Returns:** [*ModuleBuilder*](interfaces/modulebuilder.md)<State, RootState\>
 
-Defined in: [src/createModule.ts:33](https://github.com/matheusAle/vuex-tools/blob/ad2c9a8/src/createModule.ts#L33)
+Defined in: [src/createModule.ts:33](https://github.com/matheusAle/vuex-tools/blob/ef26ccf/src/createModule.ts#L33)
 
 ___
 
@@ -146,4 +146,4 @@ Name | Type | Description |
 
 **Returns:** *Store*<RootState\>
 
-Defined in: [src/createStore.ts:28](https://github.com/matheusAle/vuex-tools/blob/ad2c9a8/src/createStore.ts#L28)
+Defined in: [src/createStore.ts:28](https://github.com/matheusAle/vuex-tools/blob/ef26ccf/src/createStore.ts#L28)
