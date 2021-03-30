@@ -1,24 +1,27 @@
 # Vuex-tools
 
-The easiest way to deal with Vuex store modules with typescript.
+The easiest way to deal with Vuex store modules using typescript.
 
 ## Examples
 
 ```ts
-import { createStore, buildStore } from 'vuex-tools';
+import { createStore, createModule } from 'vuex-tools';
 
-const root = createStore<RootStore>();
+const module = createModule<RootStore['modue'], RootStore>();
 
-export const increment = root.mutation(
-  'increment',
-  (state) => (state.counter = state.counter + 1),
+export const increment = module.mutation('increment', state =>
+  state.counter = state.counter + 1
 );
-export const decrement = root.mutation(
-  'descrement',
-  (state) => (state.counter = state.counter - 1),
+export const decrement = module.mutation('descrement', state =>
+  state.counter = state.counter - 1
 );
 
-export default buildStore<RootStore>(root, { counter: 0 });
+export default createStore<RootStore>({
+  plugins: [],
+  moduleBuilders: {
+    module
+  }
+});
 
 store.commit(increment());
 // this.$store.commit(increment())
@@ -55,8 +58,8 @@ This module has an UMD bundle available through JSDelivr and Unpkg CDNs.
 <script src="https://cdn.jsdelivr.net/npm/vuex-tools"></script>
 
 <script>
-  // UMD module is exposed through the "[libraryCamelCaseName]" global variable.
-  console.log(vuexTools);
+  // UMD module is exposed through the "VuexTools" global variable.
+  console.log(VuexTools);
 </script>
 ```
 

@@ -28,3 +28,5 @@ pnpmfile.js
 # Log's files.
 *.log
 *.log.*
+
+.idea

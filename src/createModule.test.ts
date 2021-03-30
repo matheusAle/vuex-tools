@@ -1,5 +1,4 @@
 import type { Store } from 'vuex';
-import { buildStore } from './buildStore';
 import { createModule } from './createModule';
 import { createStore } from './createStore';
 import type {
@@ -10,9 +9,9 @@ import type {
 } from './types';
 
 type State = { userName: string };
-type RootState = {
+interface RootState {
   user: State;
-};
+}
 
 describe('createModule', () => {
   let module: ModuleBuilder<State, RootState>;
@@ -21,14 +20,14 @@ describe('createModule', () => {
   let fetchUser: ActionType<string>;
   let fetchUserSpy: jest.Mock;
 
-  let upercaseUserName: GetterHandler<string>;
-  let upercaseUserNameSpy: jest.Mock;
+  let uppercaseUserName: GetterHandler<string>;
+  let uppercaseUserNameSpy: jest.Mock;
 
   let changeUserName: ActionType<string>;
   let changeUserNameSpy: jest.Mock;
 
   beforeEach(() => {
-    module = createModule<State, RootState>('user');
+    module = createModule<State, RootState>({ userName: 'bar' });
 
     fetchUserSpy = jest.fn();
     fetchUser = module.action<string>('setUser', fetchUserSpy);
@@ -41,19 +40,20 @@ describe('createModule', () => {
       changeUserNameSpy,
     );
 
-    upercaseUserNameSpy = jest.fn((state: State) =>
+    uppercaseUserNameSpy = jest.fn((state: State) =>
       state.userName.toUpperCase(),
     );
 
-    upercaseUserName = module.getter<string>(
-      'upercaseUserName',
-      upercaseUserNameSpy,
+    uppercaseUserName = module.getter<string>(
+      'uppercaseUserName',
+      uppercaseUserNameSpy,
     );
 
-    const storeB = createStore<RootState>();
-    store = buildStore<RootState>(storeB, {} as RootState, [
-      module.getModule({ userName: 'bar' }),
-    ]);
+    store = createStore<RootState>({
+      moduleBuilders: {
+        user: module,
+      },
+    });
   });
 
   test('store initial state', () => {
@@ -93,9 +93,9 @@ describe('createModule', () => {
   });
   test('getter', () => {
     store.commit(changeUserName('buzz fizz'));
-    expect(upercaseUserName(store.getters)).toEqual('BUZZ FIZZ');
-    expect(upercaseUserNameSpy).toBeCalledTimes(1);
-    expect(upercaseUserNameSpy.mock.calls[0][0]).toEqual({
+    expect(uppercaseUserName(store.getters)).toEqual('BUZZ FIZZ');
+    expect(uppercaseUserNameSpy).toBeCalledTimes(1);
+    expect(uppercaseUserNameSpy.mock.calls[0][0]).toEqual({
       userName: 'buzz fizz',
     });
   });

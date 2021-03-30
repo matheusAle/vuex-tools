@@ -9,7 +9,7 @@ export declare type Mutation<State, P> = (state: State, P: P) => void;
 /**
  * @ignore
  */
-export declare type GetterHandler<R> = (gatter: any) => R;
+export declare type GetterHandler<R> = (getter: any) => R;
 /**
  * @ignore
  * Typed Vuex action function
@@ -35,14 +35,13 @@ export interface Module<State, R> extends Vuex.Module<State, R> {
 /**
  * Create an define Module's action, gatters and mutation dispatch and commit helpers
  *
- * ```typescript
+ * ```ts
  * const module = createModule<{ items: Item[] }>('itemsModule');
- *
  * ```
  */
 export interface ModuleBuilder<State, RootState = unknown> {
     /**
-     * define an Mutation and return an typed create commit function;
+     * define a Mutation and return a typed create commit function;
      *
      * ```ts
      * const setItems = module.mutation<Item[]>('setItems', (store, items) => store.items = items);
@@ -54,12 +53,12 @@ export interface ModuleBuilder<State, RootState = unknown> {
      * ```
      *
      * @param name mutation type
-     * @param func mutation handler function
-     * @typeParam P Mutation payload type
+     * @param mutationFn mutation handler function
+     * @typeParam Payload Mutation argument type
      */
     mutation<Payload>(name: string, mutationFn: Mutation<State, Payload>): ActionType<Payload>;
     /**
-     * define an Action and return an typed create dispatch function
+     * define an Action and return a typed create dispatch function
      *
      * ```ts
      * const fetchItems = module.action<{ page: number }>('setItems', ({ commit }, { page }) =>
@@ -69,21 +68,21 @@ export interface ModuleBuilder<State, RootState = unknown> {
      *        )
      * );
      *
-     * setItems([1, 2])
-     * // { type: 'itemsModule/setItems', payload: [1, 2] }
-     *
      * store.commit(setItems([1, 2]));
      * ```
      * @param name action type
-     * @param func action handler function
+     * @param actionFn action handler function
+     * @typeParam Payload Action argument type
      *
      */
     action<Payload>(name: string, actionFn: ActionHandler<State, RootState, Payload>): ActionType<Payload>;
     /**
-     * Define an getter function and create an acessor function
+     * Define an getter function and create an accessor function to getter value.
      *
      * ```ts
-     * const getSortedItems = module.getter<Item[]>('sortedItems', (state) => [...state.items].sort(a, b) => a - b);
+     * const getSortedItems = module.getter<Item[]>('sortedItems', (state) =>
+     *   [...state.items].sort(a, b) => a - b
+     * );
      *
      * // vue component
      * {
@@ -96,13 +95,13 @@ export interface ModuleBuilder<State, RootState = unknown> {
      *
      * ```
      * @param name gatter name
-     * @param func Vuex gatter function
+     * @param getterFn Vuex getter function
+     * @typeParam Return Getter return type
      */
-    getter<Payload>(name: string, getterFn: Vuex.Getter<State, RootState>): GetterHandler<Payload>;
+    getter<Return>(name: string, getterFn: Vuex.Getter<State, RootState>): GetterHandler<Return>;
     /**
-     * Receive the initial module state and return an instance of Vuex Module object
-     * @param state initial module state
+     * Create the VuexModule object.
      */
-    getModule(state: State): Module<State, RootState>;
+    getModule(name?: string): Module<State, RootState>;
 }
 //# sourceMappingURL=types.d.ts.map

@@ -23,9 +23,13 @@ const banner = `/*!
 function createOutputOptions(options) {
   return {
     banner,
-    name: '[libraryCamelCaseName]',
+    name: 'VuexTools',
     exports: 'named',
     sourcemap: true,
+    globals: {
+      vuex: 'Vuex',
+      vue: 'Vue',
+    },
     ...options,
   };
 }
@@ -35,6 +39,7 @@ function createOutputOptions(options) {
  */
 const options = {
   input: './src/index.ts',
+  external: ['vuex', 'vue'],
   output: [
     createOutputOptions({
       file: './dist/index.js',
