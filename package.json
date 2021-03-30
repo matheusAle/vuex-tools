@@ -1,6 +1,6 @@
 {
   "name": "vuex-tools",
-  "version": "1.0.1-beta",
+  "version": "1.0.2-beta",
   "description": "A library like redux-toolkit for Vuex",
   "cdn": "dist/index.umd.js",
   "main": "dist/index.js",
