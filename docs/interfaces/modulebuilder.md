@@ -2,18 +2,24 @@
 
 # Interface: ModuleBuilder<State, RootState\>
 
-Create an define Module's action, gatters and mutation dispatch and commit helpers
+Return of {@see createModule}.
+Interface that helps to create Vuex Module's actions, mutations and getters.
 
 ```ts
-const module = createModule<{ items: Item[] }>('itemsModule');
+interface RootState {
+  module_one: {
+    list: string[]
+  }
+}
+const module = createModule<RootState['module_one'], RootState>({ list: [] });
 ```
 
 ## Type parameters
 
-Name | Default |
-:------ | :------ |
-`State` | - |
-`RootState` | *unknown* |
+Name | Default | Description |
+:------ | :------ | :------ |
+`State` | - | Type of module state, usually an key in RootState.   |
+`RootState` | *unknown* | Type of root store state    |
 
 ## Table of contents
 
@@ -28,7 +34,7 @@ Name | Default |
 
 ### action
 
-▸ **action**<Payload\>(`name`: *string*, `actionFn`: *ActionHandler*<State, RootState, Payload\>): [*ActionType*](../README.md#actiontype)<Payload\>
+▸ **action**<Payload\>(`name`: *string*, `actionFn`: *ActionHandler*<State, RootState, Payload\>): *ActionType*<Payload\>
 
 define an Action and return a typed create dispatch function
 
@@ -56,9 +62,9 @@ Name | Type | Description |
 `name` | *string* | action type   |
 `actionFn` | *ActionHandler*<State, RootState, Payload\> | action handler function   |
 
-**Returns:** [*ActionType*](../README.md#actiontype)<Payload\>
+**Returns:** *ActionType*<Payload\>
 
-Defined in: [src/types.ts:89](https://github.com/matheusAle/vuex-tools/blob/2a543b1/src/types.ts#L89)
+Defined in: [src/types.ts:103](https://github.com/matheusAle/vuex-tools/blob/5dd09e7/src/types.ts#L103)
 
 ___
 
@@ -70,13 +76,13 @@ Create the VuexModule object.
 
 #### Parameters:
 
-Name | Type |
-:------ | :------ |
-`name?` | *string* |
+Name | Type | Description |
+:------ | :------ | :------ |
+`name?` | *string* | Module name/prefix    |
 
 **Returns:** *Module*<State, RootState\>
 
-Defined in: [src/types.ts:123](https://github.com/matheusAle/vuex-tools/blob/2a543b1/src/types.ts#L123)
+Defined in: [src/types.ts:140](https://github.com/matheusAle/vuex-tools/blob/5dd09e7/src/types.ts#L140)
 
 ___
 
@@ -112,27 +118,50 @@ Name | Description |
 
 Name | Type | Description |
 :------ | :------ | :------ |
-`name` | *string* | gatter name   |
+`name` | *string* | getter name   |
 `getterFn` | *Getter*<State, RootState\> | Vuex getter function   |
 
 **Returns:** *GetterHandler*<Return\>
 
-Defined in: [src/types.ts:116](https://github.com/matheusAle/vuex-tools/blob/2a543b1/src/types.ts#L116)
+Defined in: [src/types.ts:130](https://github.com/matheusAle/vuex-tools/blob/5dd09e7/src/types.ts#L130)
 
 ___
 
 ### mutation
 
-▸ **mutation**<Payload\>(`name`: *string*, `mutationFn`: [*Mutation*](../README.md#mutation)<State, Payload\>): [*ActionType*](../README.md#actiontype)<Payload\>
+▸ **mutation**<Prop, Payload\>(`name`: Prop): *ActionType*<Payload\>
 
-define a Mutation and return a typed create commit function;
+Auto Define a mutation for a property and return the action create function.
+Internally `Vue#set` is called to set the value into store.
+
+```ts
+const setItems = module.mutation('setItems');
+store.commit(setItems([1, 2]))
+```
+
+#### Type parameters:
+
+Name | Type | Description |
+:------ | :------ | :------ |
+`Prop` | *string* \| *number* \| *symbol* | - |
+`Payload` | - | Mutation argument type    |
+
+#### Parameters:
+
+Name | Type | Description |
+:------ | :------ | :------ |
+`name` | Prop | mutation type   |
+
+**Returns:** *ActionType*<Payload\>
+
+Defined in: [src/types.ts:63](https://github.com/matheusAle/vuex-tools/blob/5dd09e7/src/types.ts#L63)
+
+▸ **mutation**<Payload\>(`name`: *string*, `mutationFn?`: *Mutation*<State, Payload\>): *ActionType*<Payload\>
+
+Define Mutation with an custom implementation, and return a typed create commit function;
 
 ```ts
 const setItems = module.mutation<Item[]>('setItems', (store, items) => store.items = items);
-
-setItems([1, 2])
-// { type: 'itemsModule/setItems', payload: [1, 2] }
-
 store.commit(setItems([1, 2]))
 ```
 
@@ -147,8 +176,8 @@ Name | Description |
 Name | Type | Description |
 :------ | :------ | :------ |
 `name` | *string* | mutation type   |
-`mutationFn` | [*Mutation*](../README.md#mutation)<State, Payload\> | mutation handler function   |
+`mutationFn?` | *Mutation*<State, Payload\> | mutation handler function   |
 
-**Returns:** [*ActionType*](../README.md#actiontype)<Payload\>
+**Returns:** *ActionType*<Payload\>
 
-Defined in: [src/types.ts:66](https://github.com/matheusAle/vuex-tools/blob/2a543b1/src/types.ts#L66)
+Defined in: [src/types.ts:79](https://github.com/matheusAle/vuex-tools/blob/5dd09e7/src/types.ts#L79)

@@ -1,5 +1,5 @@
 /*!
- * vuex-tools v1.0.2-beta
+ * vuex-tools v1.0.3-beta
  * (c) [authorFullName]
  * Released under the MIT License.
  */
@@ -46,21 +46,27 @@ var actionCreator = function (moduleName, type) { return function (payload) { re
     type: moduleName() ? moduleName() + "/" + type : type,
     payload: payload,
 }); }; };
-function overrideActionContext(store) {
-    return __assign(__assign({}, store), { commit: function (type) { return store.commit(type, { root: true }); } });
+function overrideActionContext(action) {
+    return function (store, _a) {
+        var payload = _a.payload;
+        return action(__assign(__assign({}, store), { commit: function (type) { return store.commit(type, { root: true }); }, dispatch: function (type) { return store.dispatch(type, { root: true }); } }), payload);
+    };
 }
 /**
- * Create and {@see ModuleBuilder} instance.
+ * Create a {@see ModuleBuilder} instance.
  *
  * ```ts
- * import { createModule } from 'vuex-tools';
+ * interface RootState {
+ *   module_one: {
+ *     list: string[]
+ *   }
+ * }
+ * const module = createModule<RootState['module_one'], RootState>({ list: [] });
  *
- * const module = createModule('counter', { count: 1 });
- * ```
- *
- * @param initialState
+ * @param initialState - initial module state
+ * @typeParam State - Type of module state, usually an key in RootState.
+ * @typeParam RootState - Type of root store state
  */
-/* eslint-disable-next-line @typescript-eslint/no-explicit-any */
 function createModule(initialState) {
     var mutations = [];
     var actions = [];
@@ -69,6 +75,11 @@ function createModule(initialState) {
     var getModuleName = function () { return moduleName; };
     return {
         mutation: function (type, fn) {
+            if (!fn) {
+                return this.mutation("" + type, function (state, value) {
+                    Vue__default['default'].set(state, "" + type, value);
+                });
+            }
             fn.toString = function () { return "" + type; };
             mutations.push(fn);
             return actionCreator(getModuleName, type);
@@ -81,7 +92,6 @@ function createModule(initialState) {
         getter: function (type, fn) {
             fn.toString = function () { return "" + type; };
             getters.push(fn);
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
             return function (getter) {
                 return getter[moduleName + "/" + type] || getter[type];
             };
@@ -94,10 +104,7 @@ function createModule(initialState) {
                 namespaced: true,
                 state: initialState,
                 actions: actions.reduce(function (acc, action) {
-                    acc[action.toString()] = function (store, _a) {
-                        var _b = _a.payload, payload = _b === void 0 ? null : _b;
-                        action(overrideActionContext(store), payload);
-                    };
+                    acc[action.toString()] = overrideActionContext(action);
                     return acc;
                 }, {}),
                 mutations: mutations.reduce(function (acc, mutation) {
@@ -131,7 +138,7 @@ function createModule(initialState) {
  * })
  * ```
  *
- * @param options {@see Options} an extended {@see StoreOptions} that includes moduleBuilders Record.
+ * @param options - A extended {@see StoreOptions} that includes moduleBuilders Record.
  */
 function createStore(options) {
     Vue__default['default'].use(Vuex__default['default']);

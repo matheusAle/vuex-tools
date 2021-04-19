@@ -29,7 +29,7 @@ describe('createModule', () => {
   beforeEach(() => {
     module = createModule<State, RootState>({ userName: 'bar' });
 
-    fetchUserSpy = jest.fn();
+    fetchUserSpy = jest.fn(() => Promise.resolve());
     fetchUser = module.action<string>('setUser', fetchUserSpy);
 
     changeUserNameSpy = jest.fn(<Mutation<State, string>>((state, newName) => {
@@ -74,6 +74,9 @@ describe('createModule', () => {
         payload: 'buzz',
       });
     });
+    test('mutation', () => {
+      expect(store.dispatch(fetchUser('123'))).toBeInstanceOf(Promise);
+    });
   });
   test('dispatch action', () => {
     const action = fetchUser('123');
@@ -82,7 +85,6 @@ describe('createModule', () => {
     expect(fetchUserSpy.mock.calls[0][0].state).toEqual({
       userName: 'bar',
     });
-    expect(fetchUserSpy.mock.calls[0][1]).toEqual(action.payload);
   });
   test('commit call', () => {
     const payload = changeUserName('fitz');
@@ -98,5 +100,27 @@ describe('createModule', () => {
     expect(uppercaseUserNameSpy.mock.calls[0][0]).toEqual({
       userName: 'buzz fizz',
     });
+  });
+  test('auto create mutations', () => {
+    interface State {
+      m: {
+        string: string;
+        number: number;
+      };
+    }
+
+    const m = createModule<State['m'], State>({
+      string: '',
+      number: 0,
+    });
+    const setString = m.mutation('string');
+    const setNumber = m.mutation('number');
+
+    const store = createStore<State>({ moduleBuilders: { m } });
+
+    store.commit(setString('foo'));
+    store.commit(setNumber(1));
+    expect(store.state.m.string).toEqual('foo');
+    expect(store.state.m.number).toEqual(1);
   });
 });

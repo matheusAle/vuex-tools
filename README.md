@@ -4,6 +4,8 @@ The easiest way to deal with Vuex store modules using typescript.
 
 ## Examples
 
+### Simple app counter's store module [[Edit on SandBox](https://codesandbox.io/s/vuex-tools-example-vz2of?file=/src/store/index.ts)]
+
 ```ts
 import { createStore, createModule } from 'vuex-tools';
 
@@ -31,12 +33,38 @@ export default createStore<RootState>({
 });
 
 store.commit(increment());
-// this.$store.commit(increment())
 ```
 
-[View on Code Sand Box](https://codesandbox.io/s/vuex-tools-example-vz2of?file=/src/store/index.ts)
+### using with Nuxt.JS [[Edit on CodeBox](https://codesandbox.io/s/vuex-tools-nuxt-example-fvksv?file=/store/index.js)]
 
-[nuxt current date example](https://codesandbox.io/s/vuex-tools-nuxt-example-fvksv?file=/store/index.js)
+```ts
+
+// types.ts
+interface RootState {
+  counter: {
+    count: number
+  }
+}
+
+// @/store/counter.ts
+import { createStore, createModule } from 'vuex-tools';
+
+const counter = createModule<RootState['counter'], RootState>({ count: 0 });
+
+export const increment = counter.mutation('increment', state =>
+  state.count = state.count + 1
+);
+
+export const decrement = counter.mutation('decrement', state =>
+  state.count = state.count - 1
+);
+
+const _module = root.getModule(/* file/module name */ 'counter');
+
+export const mutations = _module.mutations;
+export const actions = _module.actions;
+export const getters = _module.getters;
+```
 
 ## Documentation
 

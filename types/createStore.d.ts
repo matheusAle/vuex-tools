@@ -21,7 +21,7 @@ declare type Options<RootState> = StoreOptions<RootState> & {
  * })
  * ```
  *
- * @param options {@see Options} an extended {@see StoreOptions} that includes moduleBuilders Record.
+ * @param options - A extended {@see StoreOptions} that includes moduleBuilders Record.
  */
 export declare function createStore<RootState = never>(options: Options<RootState>): Store<RootState>;
 export {};

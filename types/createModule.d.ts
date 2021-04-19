@@ -1,14 +1,18 @@
 import type { ModuleBuilder } from './types';
 /**
- * Create and {@see ModuleBuilder} instance.
+ * Create a {@see ModuleBuilder} instance.
  *
  * ```ts
- * import { createModule } from 'vuex-tools';
+ * interface RootState {
+ *   module_one: {
+ *     list: string[]
+ *   }
+ * }
+ * const module = createModule<RootState['module_one'], RootState>({ list: [] });
  *
- * const module = createModule('counter', { count: 1 });
- * ```
- *
- * @param initialState
+ * @param initialState - initial module state
+ * @typeParam State - Type of module state, usually an key in RootState.
+ * @typeParam RootState - Type of root store state
  */
 export declare function createModule<State, RootState = any>(initialState: State): ModuleBuilder<State, RootState>;
 //# sourceMappingURL=createModule.d.ts.map

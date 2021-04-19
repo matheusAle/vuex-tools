@@ -1,6 +1,11 @@
 import type { ActionContext, Getter } from 'vuex';
-import type { ModuleBuilder, Mutation, ActionHandler } from './types';
-
+import type {
+  ModuleBuilder,
+  Mutation,
+  ActionHandler,
+  ActionType,
+} from './types';
+import Vue from 'vue';
 const actionCreator = <P>(
   moduleName: () => string | undefined,
   type: string,
@@ -9,27 +14,39 @@ const actionCreator = <P>(
   payload,
 });
 
-function overrideActionContext<State, RootState>(
-  store: ActionContext<State, RootState>,
-): ActionContext<State, RootState> {
-  return {
-    ...store,
-    commit: (type) => store.commit(type, { root: true }),
-  };
+function overrideActionContext<State, RootState, Payload>(
+  action: ActionHandler<State, RootState, Payload>,
+) {
+  return (
+    store: ActionContext<State, RootState>,
+    { payload }: ReturnType<ActionType<Payload>>,
+  ) =>
+    action(
+      {
+        ...store,
+        commit: (type) => store.commit(type, { root: true }),
+        dispatch: (type) => store.dispatch(type, { root: true }),
+      },
+      payload,
+    );
 }
 
 /**
- * Create and {@see ModuleBuilder} instance.
+ * Create a {@see ModuleBuilder} instance.
  *
  * ```ts
- * import { createModule } from 'vuex-tools';
+ * interface RootState {
+ *   module_one: {
+ *     list: string[]
+ *   }
+ * }
+ * const module = createModule<RootState['module_one'], RootState>({ list: [] });
+ *```
  *
- * const module = createModule('counter', { count: 1 });
- * ```
- *
- * @param initialState
+ * @param initialState - initial module state
+ * @typeParam State - Type of module state, usually an key in RootState.
+ * @typeParam RootState - Type of root store state
  */
-/* eslint-disable-next-line @typescript-eslint/no-explicit-any */
 export function createModule<State, RootState = any>(
   initialState: State,
 ): ModuleBuilder<State, RootState> {
@@ -41,7 +58,12 @@ export function createModule<State, RootState = any>(
   const getModuleName = () => moduleName;
 
   return <ModuleBuilder<State, RootState>>{
-    mutation<Payload>(type: string, fn: Mutation<State, Payload>) {
+    mutation<Payload>(type: string, fn?: Mutation<State, Payload>) {
+      if (!fn) {
+        return this.mutation(`${type}`, (state, value) => {
+          Vue.set(state as any, `${type}`, value);
+        });
+      }
       fn.toString = () => `${type}`;
       (mutations as Mutation<State, Payload>[]).push(fn);
       return actionCreator<Payload>(getModuleName, type);
@@ -57,7 +79,6 @@ export function createModule<State, RootState = any>(
     getter<Payload>(type: string, fn: Getter<State, RootState>) {
       fn.toString = () => `${type}`;
       getters.push(fn);
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       return (getter: any): Payload =>
         getter[`${moduleName}/${type}`] || getter[type];
     },
@@ -68,9 +89,7 @@ export function createModule<State, RootState = any>(
         namespaced: true,
         state: initialState,
         actions: actions.reduce((acc, action) => {
-          acc[action.toString()] = (store, { payload = null }) => {
-            action(overrideActionContext(store), payload);
-          };
+          acc[action.toString()] = overrideActionContext(action);
           return acc;
         }, {}),
         mutations: mutations.reduce((acc, mutation) => {

@@ -8,78 +8,10 @@ Vuex Tools
 
 - [ModuleBuilder](interfaces/modulebuilder.md)
 
-### Type aliases
-
-- [ActionType](README.md#actiontype)
-- [Mutation](README.md#mutation)
-
 ### Functions
 
 - [createModule](README.md#createmodule)
 - [createStore](README.md#createstore)
-
-## Type aliases
-
-### ActionType
-
-Ƭ **ActionType**<P\>: (`payload`: P) => { `payload`: P ; `type`: *string*  }
-
-return if action/mutation create
-
-#### Type parameters:
-
-Name | Description |
-:------ | :------ |
-`P` | Action payload type    |
-
-#### Type declaration:
-
-▸ (`payload`: P): *object*
-
-#### Parameters:
-
-Name | Type |
-:------ | :------ |
-`payload` | P |
-
-**Returns:** *object*
-
-Name | Type |
-:------ | :------ |
-`payload` | P |
-`type` | *string* |
-
-Defined in: [src/types.ts:30](https://github.com/matheusAle/vuex-tools/blob/2a543b1/src/types.ts#L30)
-
-___
-
-### Mutation
-
-Ƭ **Mutation**<State, P\>: (`state`: State, `P`: P) => *void*
-
-Typed Vuex Mutation function
-
-#### Type parameters:
-
-Name | Description |
-:------ | :------ |
-`State` | Module state type   |
-`P` | Mutation payload type    |
-
-#### Type declaration:
-
-▸ (`state`: State, `P`: P): *void*
-
-#### Parameters:
-
-Name | Type |
-:------ | :------ |
-`state` | State |
-`P` | P |
-
-**Returns:** *void*
-
-Defined in: [src/types.ts:9](https://github.com/matheusAle/vuex-tools/blob/2a543b1/src/types.ts#L9)
 
 ## Functions
 
@@ -87,30 +19,33 @@ Defined in: [src/types.ts:9](https://github.com/matheusAle/vuex-tools/blob/2a543
 
 ▸ **createModule**<State, RootState\>(`initialState`: State): [*ModuleBuilder*](interfaces/modulebuilder.md)<State, RootState\>
 
-Create and {@see ModuleBuilder} instance.
+Create a {@see ModuleBuilder} instance.
 
 ```ts
-import { createModule } from 'vuex-tools';
-
-const module = createModule('counter', { count: 1 });
+interface RootState {
+  module_one: {
+    list: string[]
+  }
+}
+const module = createModule<RootState['module_one'], RootState>({ list: [] });
 ```
 
 #### Type parameters:
 
-Name | Default |
-:------ | :------ |
-`State` | - |
-`RootState` | *any* |
+Name | Default | Description |
+:------ | :------ | :------ |
+`State` | - | Type of module state, usually an key in RootState.   |
+`RootState` | *any* | Type of root store state    |
 
 #### Parameters:
 
-Name | Type |
-:------ | :------ |
-`initialState` | State |
+Name | Type | Description |
+:------ | :------ | :------ |
+`initialState` | State | initial module state   |
 
 **Returns:** [*ModuleBuilder*](interfaces/modulebuilder.md)<State, RootState\>
 
-Defined in: [src/createModule.ts:33](https://github.com/matheusAle/vuex-tools/blob/2a543b1/src/createModule.ts#L33)
+Defined in: [src/createModule.ts:50](https://github.com/matheusAle/vuex-tools/blob/5dd09e7/src/createModule.ts#L50)
 
 ___
 
@@ -142,8 +77,8 @@ Name | Default |
 
 Name | Type | Description |
 :------ | :------ | :------ |
-`options` | *Options*<RootState\> | {@see Options} an extended {@see StoreOptions} that includes moduleBuilders Record.    |
+`options` | *Options*<RootState\> | A extended {@see StoreOptions} that includes moduleBuilders Record.    |
 
 **Returns:** *Store*<RootState\>
 
-Defined in: [src/createStore.ts:28](https://github.com/matheusAle/vuex-tools/blob/2a543b1/src/createStore.ts#L28)
+Defined in: [src/createStore.ts:28](https://github.com/matheusAle/vuex-tools/blob/5dd09e7/src/createStore.ts#L28)
